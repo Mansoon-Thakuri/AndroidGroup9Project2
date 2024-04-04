@@ -77,6 +77,39 @@ class ChangeTextBehaviorKtTest {
         onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
     }
 
+    @Test
+    fun validateTextViewInActivity() {
+        onView(withId(R.id.textToBeChanged)).check(matches(withText(R.string.hello_world)))
+    }
+
+    @Test
+    fun validateEditTextChangeTextButton() {
+        val inputText = "123"
+        onView(withId(R.id.editTextUserInput)).perform(
+            ViewActions.clearText(),
+            ViewActions.typeText(inputText)
+        )
+        onView(withId(R.id.changeTextBt)).perform(ViewActions.click())
+        onView(withId(R.id.textToBeChanged)).check(matches(withText(inputText)))
+    }
+
+    @Test
+    fun validateEditTextOpenActivityChangeTextButton() {
+        val inputText = "123"
+        onView(withId(R.id.editTextUserInput)).perform(
+            ViewActions.clearText(),
+            ViewActions.typeText(inputText)
+        )
+        onView(withId(R.id.activityChangeTextBtn)).perform(ViewActions.click())
+        onView(withId(R.id.show_text_view)).check(matches(withText(inputText)))
+    }
+
+    @Test
+    fun validateEmptyEditTextChangeTextButton() {
+        onView(withId(R.id.changeTextBt)).perform(ViewActions.click())
+        onView(withId(R.id.textToBeChanged)).check(matches(withText("")))
+    }
+
     companion object {
 
         val STRING_TO_BE_TYPED = "Espresso"
